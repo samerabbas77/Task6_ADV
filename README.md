@@ -1,66 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Here's a sample `README.md` file for your **Team Project Management System**:
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+# Team Project Management System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is a **Team Project Management System** built using Laravel 10. The system allows team members to manage projects and tasks with different roles and permissions, such as Manager, Developer, and Tester. The API allows for creating, updating, and managing projects, tasks, and user roles within the team.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Manage Projects: Create, read, update, and delete projects.
+- Manage Tasks: Create, update, and delete tasks associated with projects.
+- Role-based Access Control:
+  - **Manager**: Can create and edit tasks.
+  - **Developer**: Can only update task status.
+  - **Tester**: Can add comments to tasks.
+- Task Filtering: Filter tasks by status or priority using `whereRelation`.
+- Task Sorting: Retrieve the latest or oldest task using `latestOfMany` and `oldestOfMany`.
+- Get Highest Priority Task: Fetch the task with the highest priority based on custom conditions using `ofMany`.
 
-## Learning Laravel
+## Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Before running this project, ensure you have the following installed:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP >= 8.1
+- Composer
+- MySQL or any other database supported by Laravel
+- Laravel 10
+- Postman (for API testing)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Project Setup
 
-## Laravel Sponsors
+1. Clone the repository:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+   ```bash
+   git clone https://github.com/your-repo/team-project-management-system.git
+   ```
 
-### Premium Partners
+2. Install project dependencies:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+   ```bash
+   cd team-project-management-system
+   composer install
+   ```
 
-## Contributing
+3. Configure your `.env` file:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```bash
+   cp .env.example .env
+   ```
 
-## Code of Conduct
+   Update the database configuration to match your setup:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   ```bash
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_database_user
+   DB_PASSWORD=your_database_password
+   ```
+5. Generate the application key:
 
-## Security Vulnerabilities
+   ```bash
+   php artisan key:generate
+   ```
+   
+6. Run the migrations to create the required tables:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   ```bash
+   php artisan migrate
+   ```
+
+
+7. Start the development server:
+
+   ```bash
+   php artisan serve
+   ```
+
+## Database Structure
+
+The following tables are created in the database:
+
+- `projects`: Stores project details (name, description).
+- `tasks`: Stores task details (title, description, status, priority, due_date).
+- `users`: Stores user details (name, email, password).
+- `project_user`: A pivot table that stores additional information such as:
+  - `role`: Role of the user in the project (manager, developer, tester).
+  - `contribution_hours`: Number of hours contributed by the user.
+  - `last_activity`: Last activity timestamp for the user in the project.
+
+## API Endpoints
+
+The following API endpoints are available for managing the system. You can import the provided **Postman Collection** to test them:
+
+### Projects
+
+- **GET /api/projects** - Get all projects.
+- **POST /api/projects** - Create a new project (Manager only).
+- **GET /api/projects/{id}** - Get project details by ID.
+- **PUT /api/projects/{id}** - Update a project (Manager only).
+- **DELETE /api/projects/{id}** - Delete a project (Manager only).
+
+### Tasks
+
+- **GET /api/projects/{project_id}/tasks** - Get all tasks for a project.
+- **POST /api/projects/{project_id}/tasks** - Create a new task (Manager only).
+- **PUT /api/tasks/{task_id}** - Update a task (Manager/Developer).
+- **DELETE /api/tasks/{task_id}** - Delete a task (Manager only).
+- **PATCH /api/tasks/{task_id}/status** - Update task status (Developer only).
+- **POST /api/tasks/{task_id}/comments** - Add a comment to a task (Tester only).
+
+### Task Filtering & Sorting
+
+- **GET /api/projects/{project_id}/tasks?status={status}&priority={priority}** - Filter tasks by status and priority.
+- **GET /api/projects/{project_id}/tasks/latest** - Get the latest task in a project.
+- **GET /api/projects/{project_id}/tasks/oldest** - Get the oldest task in a project.
+- **GET /api/projects/{project_id}/tasks/highest-priority** - Get the highest priority task with a specific condition.
+
+## Relationships
+
+- **Project-User Relationship (Many-to-Many)**: Uses a pivot table `project_user` to store additional data like role, contribution hours, and last activity.
+- **User-Task Relationship**: Users can access tasks related to their assigned projects using `hasManyThrough`.
+- **Task Filtering**: Users can filter tasks by status or priority using `whereRelation`.
+
+## Code Documentation
+
+All functions are documented using **DocBlocks** for better clarity and maintainability. Please refer to the codebase for more details.
+
+## Permissions System
+
+- **Manager**: Can add, edit, and delete tasks.
+- **Developer**: Can only update the status of tasks.
+- **Tester**: Can add comments to tasks.
+
+## Postman Collection
+
+A **Postman Collection** is included in the repository for testing the API endpoints. You can import it into Postman and use it to test various API functionalities.
+
+https://documenter.getpostman.com/view/34411360/2sAXqqcNfi
+
+## Testing the Application
+
+You can use Postman to test the API endpoints as defined in the **API Endpoints** section. Make sure the server is running and the database is properly set up.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-source and licensed under the [MIT license](LICENSE).
+
+---
+
+This `README.md` outlines the system structure, how to set up the project, the available API endpoints, and how to test the system using Postman.
