@@ -147,6 +147,28 @@ class TaskService
         }
     }
     //...........................................................................
+   //...........................................................................
+    /**
+     * add comment to a spicfic task (only by tester)
+     * @param mixed $task
+     * @param mixed $comment
+     * @throws \Exception
+     * @return Task|Task[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function addComment($task, $comment)
+    {
+        try {
+            $task = Task::findOrFail($task->id);
+
+            $task->comment = $comment['comment'];
+            $task->save();
+
+            return $task;
+        } catch (Exception $e) {
+            throw new Exception('Error while add comment: ' . $e->getMessage());
+        }
+    }
+    //...........................................................................
     //...........................................................................
     /**
      * Summary of getLatestTask
@@ -181,21 +203,23 @@ class TaskService
     }
 //..............................................................................
 //..............................................................................
-
-    public function addComment($task, $comment)
+    /**
+     * Summary of getHighestTaskPriorityService
+     * @param mixed $project
+     * @throws \Exception
+     * @return mixed
+     */
+    public function getHighestTaskPriorityService($project,$validated)
     {
         try {
-            $task = Task::findOrFail($task->id);
-
-            $task->comment = $comment['comment'];
-            $task->save();
-
-            return $task;
+           $task = $project->maxPriority($validated['title'])->first();
+         
+           return $task;
         } catch (Exception $e) {
             throw new Exception('Error while add comment: ' . $e->getMessage());
         }
-
     }
+
 
 
 

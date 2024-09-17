@@ -53,4 +53,8 @@ Route::group([
 
           Route::post('task/comment/{task}',[TaskController::class,'addComment']);
 
+          Route::post('task/priority/{project}',[TaskController::class,'getHighestTaskPriority'])->middleware('isAdmin');
+
+
+
   });

@@ -20,7 +20,8 @@ class Project extends Model
         return $this->belongsToMany(User::class)
         ->withPivot('p_rule','contribution_hours','last_activity');
     }
-    
+    //...................................................................................................
+    //...................................................................................................
     /**
      * 1 To M project has mony
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -30,7 +31,8 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-
+    //...................................................................................................
+    //...................................................................................................
         /**
      * get the oldest task by its id
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -39,6 +41,8 @@ class Project extends Model
     {
         return $this->hasOne(Task::class)->oldestOfMany();
     }
+    //...................................................................................................
+    //...................................................................................................
     /**
      * get the newist task by its id
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -46,5 +50,20 @@ class Project extends Model
     public function lastTask()
     {
         return $this->hasone(Task::class)->latestOfMany();
+    }
+    //...................................................................................................
+    //...................................................................................................
+
+    public function maxPriority( $title)
+    {
+        return $this->hasone(Task::class)->ofMany([
+            'priority' => 'max'
+        ],function($q) use ($title)
+        {
+           $q ->where('priority','hight')
+              ->where('title','LIKE','%'. $title .'%');
+
+        });
+
     }
 }

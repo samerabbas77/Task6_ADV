@@ -91,6 +91,12 @@ class ProjectController extends Controller
 
 //................................................................................................................    
 //................................................................................................................ 
+    /**
+     * assign project to a user
+     * @param \App\Http\Requests\Project\assignProjectRequst $request
+     * @param \App\Models\Project $project
+     * @return JsonResponse|mixed
+     */
     public function assign_user(assignProjectRequst $request,Project $project)
     {
         $request->validated();
