@@ -102,6 +102,8 @@ class ProjectService
             if (!$project) {
                 throw new Exception('Project not found');
             }
+            //detach the project with all the user in database
+            $project->users()->detach();
             $project->delete();
             return true;
         } catch (Exception $e) {

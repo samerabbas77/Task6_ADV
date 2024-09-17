@@ -140,6 +140,7 @@ class UserServices
             if( ($validated['force_Delete'] == null) || ($validated['force_Delete'] == 0))
             {
                 $old = User::findOrFail($id);
+                $old->projects()->detach();
                 $old->delete();
                 return new UserResource($old);
             }elseif($validated['force_Delete'] == 1 && Auth::user()->rule == 'admin'){

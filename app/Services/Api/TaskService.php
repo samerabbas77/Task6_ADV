@@ -134,6 +134,7 @@ class TaskService
            {
                          // Find the task by ID, if not found it throws a ModelNotFoundException
             $task = Task::findOrFail($taskId);
+            
             // Delete the task
             $task->delete();
            }else{
